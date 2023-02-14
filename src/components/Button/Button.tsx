@@ -1,5 +1,5 @@
-import './Button.scss';
+import style from './Button.module.scss';
 
 export default function Button(props: any) {
-  return <button className="botao">{props.children}</button>;
+  return <button className={style.botao}>{props.children}</button>;
 }

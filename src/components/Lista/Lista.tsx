@@ -1,4 +1,4 @@
-import './Lista.scss';
+import style from './Lista.module.scss';
 
 export default function Lista() {
   const itens = [
@@ -7,11 +7,11 @@ export default function Lista() {
   ];
 
   return (
-    <aside className="listaTarefas">
+    <aside className={style.listaTarefas}>
       <h2>Estudos do dia</h2>
       <ul>
         {itens.map((itens, index) => (
-          <li key={index} className="item">
+          <li key={index} className={style.item}>
             <h3>{itens.item}</h3>
             <span>{itens.tempo}</span>
           </li>
