@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { tempoParaSegundos } from '../../common/utils/date';
 import { ITarefas } from '../../types/tarefas';
 import Button from '../Button/Button';
@@ -11,17 +11,29 @@ interface Props {
 
 export default function Cronometro({ selecionado }: Props) {
   const [tempo, setTempo] = useState<number>();
-  if (selecionado?.tempo) {
-    setTempo(tempoParaSegundos(selecionado.tempo));
+
+  useEffect(() => {
+    if (selecionado?.tempo) {
+      setTempo(tempoParaSegundos(String(selecionado.tempo)));
+    }
+  }, [selecionado]);
+
+  function regressiva(contador: number = 0) {
+    setTimeout(() => {
+      if (contador > 0) {
+        setTempo(contador - 1);
+        return regressiva(contador - 1);
+      }
+    }, 1000);
   }
+
   return (
     <div className={style.cronometro}>
       <p className={style.titulo}>Escolha um card e inicie o cronometro</p>
-      Tempo: {tempo}
       <div className={style.relogioWrapper}>
-        <Relogio />
+        <Relogio tempo={tempo} />
       </div>
-      <Button>Começar</Button>
+      <Button onClick={() => regressiva(tempo)}>Começar</Button>
     </div>
   );
 }
